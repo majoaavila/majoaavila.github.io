@@ -1,9 +1,9 @@
 //funcion que permitira imprimir los datos en la pantalla
-function loadUserData() {
+function cargarData() {
     //se crea la sesion
     let user = getSession();
 
-    //imprime los datos indicados al <p id='saldo> </p> y al <h1 id="usuario"></h1>
+    //imprime los datos indicados al html
     document.getElementById('usuario').innerHTML = user.name;
     document.getElementById('saldo').innerHTML = `$${user.cash}`;
     document.getElementById('cardNumber').innerHTML = user.cardNumber;
@@ -18,7 +18,7 @@ function loadUserData() {
 }
 
 //se regresa la funcion
-loadUserData();
+cargarData();
 
 //funcion que permite actualizar el saldo del usuario
 function updateUserCash(cash) {
@@ -39,15 +39,16 @@ function depositar() {
     //se define la operacion de la funcion, esta sumara al saldo actual, el monto ingresado
     let saldoTotal = user.cash + parseInt(monto);
 
-    //se implementa condicional de la regla de negocio: 'no se pueden tener mas de $990 en la cuenta'
-    if(saldoTotal && monto) {
+    //si se introdujo un monto, entonces
+    if (saldoTotal && monto) {
+        //se implementa condicional de la regla de negocio: 'no se pueden tener mas de $990 en la cuenta'
         if (saldoTotal > 990) {
             Swal.fire(
                 'Depósito rechazado',
                 'No puedes tener más de $990 en tu cuenta',
                 'error'
             );
-    
+
         } else {
             //si se respeta esta regla, entonces se procede a realizar la operacion
             user = updateUserCash(saldoTotal);
@@ -55,6 +56,7 @@ function depositar() {
         }
 
     } else {
+        //si no se introdujo un monto, entonces
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -70,7 +72,7 @@ function depositar() {
             title: 'Ingresa un monto'
         });
     }
-    
+
 }
 
 //funcion que permite hacer un retiro de dinero a la cuenta
